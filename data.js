@@ -11,4 +11,4 @@ const DB={products:[
     for(let k=0;k<n;k++){const p=DB.products[Math.floor(rnd()*3)],q=1+Math.floor(rnd()*(p.id===3?3:7));
       DB.sales.push({id:DB.nid++,t:Date.now()-d*DAY-(k+1)*900e3,cust:N[Math.floor(rnd()*7)],pid:p.id,nama:p.nama,qty:q,jual:p.harga,beli:p.beli})}}})();
 try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(o&&o.products&&o.sales)Object.assign(DB,o)}}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}};
+const save=()=>{DB.rev=Date.now();try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}if(window.cloudPush)cloudPush()};

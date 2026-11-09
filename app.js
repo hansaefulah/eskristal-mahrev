@@ -26,7 +26,7 @@ function home(){
   const m6=[...Array(6)].map((_,i)=>{const d=new Date(mo.y,mo.m-5+i,1),x=sum(DB.sales.filter(s=>inM(s,d.getFullYear(),d.getMonth())));
     return{l:MN[d.getMonth()].slice(0,3),v:[x.om,x.lb]}});
   const stokMod=DB.products.reduce((x,p)=>x+p.stok*p.beli,0);
-  return `<div class="hero"><small>Penjualan Es Kristal</small><h1>Warung Mahrev - Buyut</h1></div>
+  return `<div class="hero"><small>Penjualan Es Kristal<span id="sync">${window.syncTxt?" · "+syncTxt():""}</span></small><h1>Warung Mahrev</h1></div>
   <div class="mon"><button onclick="mv(-1)">‹</button><b>${MN[mo.m]} ${mo.y}</b><button onclick="mv(1)" ${isNow?"disabled":""}>›</button></div>
   <div class="grid">
    <div class="stat"><span>Omzet (penjualan)</span><b>${rp(a.om)}</b></div>
@@ -47,7 +47,7 @@ function sell(){
    <label>Jumlah (stok: ${p.stok})</label>
    <div class="qty"><button onclick="chg(-1)">−</button><input type="number" inputmode="numeric" min="1" value="${form.qty}" onchange="form.qty=Math.max(1,+this.value||1);go()"><button onclick="chg(1)">+</button></div>
    <label>Nama pembeli (opsional)</label>
-   <input placeholder="Contoh: Warung Pak Farhan" value="${esc(form.cust)}" oninput="form.cust=this.value">
+   <input placeholder="Contoh: Warung Bu Ani" value="${esc(form.cust)}" oninput="form.cust=this.value">
    <div class="total"><span>Total<small class="sm">Estimasi laba ${rp((p.harga-p.beli)*form.qty)}</small></span><b>${rp(p.harga*form.qty)}</b></div>
    <button class="btn" onclick="doSell()">Simpan Penjualan</button></div>`}
 function stock(){
@@ -62,7 +62,7 @@ function hist(){
   return `<h2 class="t">Riwayat</h2><div class="card" style="margin-top:12px">`+(list.length?list.map(s=>`<div class="row"><div><b>${esc(s.cust||"Pembeli umum")}</b><small>${esc(s.nama)} × ${s.qty} · ${jam(s.t)}</small><small>Laba ${rp(s.qty*(s.jual-s.beli))}</small></div>
   <div style="text-align:right"><b>${rp(s.qty*s.jual)}</b><button class="del" onclick="delSale(${s.id})" aria-label="Hapus">×</button></div></div>`).join(""):`<div class="empty">Belum ada transaksi</div>`)+`</div>`}
 
-
+// ===== CRUD PRODUK =====
 function openSheet(id){sheet=id?{...prod(id)}:{id:0,nama:"",beli:"",harga:"",stok:""};delArm=false;drawSheet()}
 function drawSheet(){const el=$("#sheet");if(!sheet){el.innerHTML="";return}
   el.innerHTML=`<div class="ov" onclick="if(event.target===this){sheet=null;drawSheet()}"><div class="sh"><h2>${sheet.id?"Edit":"Tambah"} Produk</h2>

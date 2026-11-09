@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Warung Mahrev-Buyut</title>
+<title>Warung Mahrev</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3fa2e6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1a2a" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mahrev">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#f3f9fe;--card:#fff;--tx:#0f2a43;--mu:#6b84a0;--pr:#3fa2e6;--pr2:#cfe9fb;--soft:#e8f4fd;--bd:#dcebf7;--ok:#2bb38a;--bad:#e5586b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1a2a;--card:#12273b;--tx:#e6f2fc;--mu:#8fa9c4;--pr:#5db6f2;--pr2:#1d3d5a;--soft:#17324b;--bd:#1f3a54;--ok:#3fd0a3;color-scheme:dark}}
@@ -49,4 +58,10 @@ svg text{fill:var(--mu);font-size:10px}
 <nav><div id="nav"></div></nav>
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="sync.js"></script>
+<script>
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")){
+  addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
 </body></html>

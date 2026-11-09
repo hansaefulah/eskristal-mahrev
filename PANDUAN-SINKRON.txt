@@ -1,0 +1,23 @@
+PANDUAN SINKRONISASI WARUNG MAHREV (Firebase, gratis)
+
+1. Buka console.firebase.google.com, buat project baru (misal "mahrev").
+2. Menu Build -> Realtime Database -> Create Database. Pilih lokasi Singapore, mode "locked".
+3. Salin alamat database (contoh: https://mahrev-default-rtdb.asia-southeast1.firebasedatabase.app).
+4. Buka sync.js, isi FIREBASE_URL dengan alamat itu.
+5. Di Realtime Database -> tab Rules, tempel lalu Publish:
+
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "warung-mahrev": { ".read": true, ".write": true }
+  }
+}
+
+6. Unggah seluruh folder ke hosting HTTPS (Netlify / Vercel / GitHub Pages).
+7. Buka di HP pertama (yang datanya benar) -> data otomatis terunggah.
+   Buka di HP lain -> data sama, dan berubah bersamaan (cek tiap 5 detik).
+
+CATATAN KEAMANAN: aturan di atas membuat siapa pun yang tahu alamat database bisa
+membaca dan menulis data. Jangan bagikan alamat itu. Untuk keamanan penuh,
+tambahkan Firebase Authentication.
